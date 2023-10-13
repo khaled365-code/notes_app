@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:notes_app/views/editnote_screen.dart';
 import 'package:notes_app/widgets/custom_appbar.dart';
 
 import '../widgets/modalbuttomsheet_widget.dart';
@@ -20,14 +21,23 @@ class Notesscreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children:
             [
-            Custombar(),
+            Custombar(
+              title: 'Notes',
+              icon: Icons.search,
+            ),
             SizedBox(height: 10,),
             Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsetsDirectional.symmetric(vertical: 20),
-                    itemBuilder: (context, index) => Noteitem(),
-                separatorBuilder: (context, index) => SizedBox(height: 20,),
-                itemCount: 20,)),
+                child: InkWell(
+                  onTap: ()
+                  {
+                    Navigator.pushNamed(context, Editnotescreen.id);
+                  },
+                  child: ListView.separated(
+                    padding: EdgeInsetsDirectional.symmetric(vertical: 20),
+                      itemBuilder: (context, index) => Noteitem(),
+                  separatorBuilder: (context, index) => SizedBox(height: 20,),
+                  itemCount: 20,),
+                )),
             ],
         ),
       ),

@@ -2,8 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-class Searchicon extends StatelessWidget {
+class Customicon extends StatelessWidget {
 
+  const Customicon({super.key, required this.icon});
+  final IconData icon;
   @override
   Widget build(BuildContext context)
   {
@@ -14,7 +16,7 @@ class Searchicon extends StatelessWidget {
         color: Colors.white.withOpacity(.05),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Icon(Icons.search,size: 25),
+      child: Icon(icon,size: 25),
 
     );
   }
