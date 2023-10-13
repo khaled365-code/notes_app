@@ -10,7 +10,7 @@ class Custombar extends StatelessWidget {
 
     return Row(
       children: [
-        Text('Notes',style: TextStyle(fontSize: 30,color: Colors.white),),
+        Text('Notes',style: TextStyle(fontSize: 30),),
         Spacer(),
         Searchicon()
       ],

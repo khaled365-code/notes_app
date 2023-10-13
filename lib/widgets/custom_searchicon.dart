@@ -14,7 +14,7 @@ class Searchicon extends StatelessWidget {
         color: Colors.white.withOpacity(.05),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Icon(Icons.search,size: 25,color: Colors.white,),
+      child: Icon(Icons.search,size: 25),
 
     );
   }
