@@ -1,7 +1,11 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:quickalert/quickalert.dart';
+import '../cubits/add_note/add_note_cubit.dart';
 import 'custom_button.dart';
 import 'custom_textfield.dart';
+import 'form_widget.dart';
 
 
 class Modalbuttomsheet extends StatefulWidget {
@@ -13,82 +17,32 @@ class Modalbuttomsheet extends StatefulWidget {
 
 class _ModalbuttomsheetState extends State<Modalbuttomsheet> {
 
-
-  var checkDataKey=GlobalKey<FormState>();
-  AutovalidateMode autovalidateMode=AutovalidateMode.disabled;
-  String? title,subTiitle;
   @override
-  Widget build(BuildContext context)
-  {
-    return Form(
-      key: checkDataKey,
-      autovalidateMode: autovalidateMode,
-      child: Padding(
-          padding: const EdgeInsets.only(top: 25,left: 20,right: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Customtextfield(hintText: 'Title',
-                   onsaved: (value)
-                    {
-                      title=value;
-                    },
-                    validator: (value)
-                    {
-                      if(value?.isEmpty ?? true)
-                        {
-                          return 'this field is required';
-                        }else
-                          {
-                            return null;
-                          }
-                    },
+  Widget build(BuildContext context) {
+    return BlocConsumer<AddNoteCubit, AddNoteState>(
+      listener: (context, state) {
+        if(state is AddNoteSuccess)
+          {
+             Navigator.pop(context);
+          }
+        if (state is AddNoteFailure)
+          {
+             QuickAlert.show(context: context,
+                 type: QuickAlertType.error,
+                 title: 'Error',
+                 text: '${state.errorMessage}',
+                borderRadius: 16
+             );
+          }
+      },
+      builder: (context, state) {
+        return ModalProgressHUD(
+          inAsyncCall: state is AddNoteLoading? true : false,
+            child: Formwidget());
 
-                  ),
-                  SizedBox(height: 30,),
-                  Customtextfield(hintText: 'content',maxlines: 5,
-                    onsaved: (value)
-                    {
-                      subTiitle=value;
-                    },
-                    validator: (value)
-                    {
-                      if(value?.isEmpty ?? true)
-                      {
-                        return 'this field is required';
-                      }else
-                      {
-                        return null;
-                      }
-                    },
-                  ),
-                  SizedBox(height: 30,),
-                  Custombutton(
-                    onTap: ()
-                    {
-                      if(checkDataKey.currentState!.validate())
-                        {
-                          checkDataKey.currentState!.save();
-
-                        }
-                      else
-                        {
-                          autovalidateMode=AutovalidateMode.always;
-                          setState(() {
-
-                          });
-                        }
-
-                    },
-                  ),
-
-
-
-                ],
-              ),
-            ),
-
-        ),
+      },
     );
   }
+
+
 }
