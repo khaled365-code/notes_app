@@ -19,28 +19,28 @@ class _ModalbuttomsheetState extends State<Modalbuttomsheet> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AddNoteCubit, AddNoteState>(
-      listener: (context, state) {
-        if(state is AddNoteSuccess)
-          {
-             Navigator.pop(context);
+    return BlocProvider(
+      create: (context) => AddNoteCubit(),
+      child: BlocConsumer<AddNoteCubit, AddNoteState>(
+        listener: (context, state) {
+          if (state is AddNoteSuccess) {
+            Navigator.pop(context);
           }
-        if (state is AddNoteFailure)
-          {
-             QuickAlert.show(context: context,
-                 type: QuickAlertType.error,
-                 title: 'Error',
-                 text: '${state.errorMessage}',
+          if (state is AddNoteFailure) {
+            QuickAlert.show(context: context,
+                type: QuickAlertType.error,
+                title: 'Error',
+                text: '${state.errorMessage}',
                 borderRadius: 16
-             );
+            );
           }
-      },
-      builder: (context, state) {
-        return ModalProgressHUD(
-          inAsyncCall: state is AddNoteLoading? true : false,
-            child: Formwidget());
-
-      },
+        },
+        builder: (context, state) {
+          return AbsorbPointer (
+            absorbing: state is AddNoteLoading? true:false,
+              child: Formwidget());
+        },
+      ),
     );
   }
 
