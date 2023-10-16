@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:notes_app/models/note_model.dart';
+import 'package:quickalert/models/quickalert_options.dart';
+import 'package:quickalert/quickalert.dart';
 
 class Noteitem extends StatelessWidget {
 
@@ -26,7 +28,39 @@ class Noteitem extends StatelessWidget {
              ),
              trailing: Padding(
                padding: const EdgeInsets.only(top: 20),
-               child: Icon(FontAwesomeIcons.trash,size: 25,color: Colors.black,),
+               child: GestureDetector(
+                 onTap: ()
+                   {
+                     QuickAlert.show(context: context,
+                         type: QuickAlertType.confirm,
+                          title: 'Confirm' ,
+                          text:  'Are you sure?',
+                          cancelBtnText: 'Cancel',
+                          confirmBtnText:  'yes',
+                         confirmBtnColor: Colors.white,
+                         backgroundColor: Colors.black,
+                         headerBackgroundColor: Colors.grey,
+                         confirmBtnTextStyle: const TextStyle(
+                           color: Colors.black,
+                           fontWeight: FontWeight.bold,
+                         ),
+                         titleColor: Colors.white,
+                         textColor: Colors.white,
+                         onConfirmBtnTap: ()
+                         {
+                           note.delete();
+                           Navigator.pop(context);
+
+                         },
+                          onCancelBtnTap: ()
+                         {
+                           Navigator.pop(context);
+                         }
+
+                     );
+
+                   },
+                   child: Icon(FontAwesomeIcons.trash,size: 25,color: Colors.black,)),
              )
            ),
            Padding(
