@@ -52,7 +52,9 @@ class _NotesscreenState extends State<Notesscreen> {
                           child: ListView.separated(
                             padding: EdgeInsetsDirectional.symmetric(
                                 vertical: 20),
-                            itemBuilder: (context, index) => Noteitem(),
+                            itemBuilder: (context, index) => Noteitem(
+                              note: notes[index],
+                            ),
                             separatorBuilder: (context, index) => SizedBox(height: 20,),
                             itemCount: notes.length,)
 
