@@ -10,18 +10,12 @@ part 'load_notes_state.dart';
 class LoadNotesCubit extends Cubit<LoadNotesState> {
   LoadNotesCubit() : super(LoadNotesInitial());
 
-
+ List<Notemodel>? notes;
   fetch()
   {
-    try
-    {
       var notesBox = Hive.box<Notemodel>(kHiveBox);
-      var notes = notesBox.values.toList();
-      emit(NotesSuccess(notes: notes));
-    } catch (e)
-    {
-      emit(Notesfailure(errorMessage: e.toString()));
-    }
+      notes = notesBox.values.toList();
+
 
   }
 }

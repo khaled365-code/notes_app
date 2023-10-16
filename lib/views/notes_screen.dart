@@ -1,59 +1,80 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/cubits/notes_cubit/load_notes_cubit.dart';
+import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/views/editnote_screen.dart';
 import 'package:notes_app/widgets/custom_appbar.dart';
 
 import '../widgets/modalbuttomsheet_widget.dart';
 import '../widgets/note_item.dart';
 
-class Notesscreen extends StatelessWidget {
+class Notesscreen extends StatefulWidget {
 
-  static String id='Notesscreen';
+  static String id = 'Notesscreen';
+
   @override
-  Widget build(BuildContext context)
-  {
+  State<Notesscreen> createState() => _NotesscreenState();
+}
 
+class _NotesscreenState extends State<Notesscreen> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<LoadNotesCubit>(context).fetch();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<Notemodel> notes = BlocProvider.of<LoadNotesCubit>(context).notes ?? [];
+    print(notes.length);
     return Scaffold(
 
-      body:Padding(
-        padding: const EdgeInsets.only(top: 80,left: 20,right: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children:
+        body: Padding(
+          padding: const EdgeInsets.only(top: 80, left: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children:
             [
-            Custombar(
-              title: 'Notes',
-              icon: Icons.search,
-            ),
-            SizedBox(height: 10,),
-            Expanded(
-                child: InkWell(
-                  onTap: ()
-                  {
-                    Navigator.pushNamed(context, Editnotescreen.id);
-                  },
-                  child: ListView.separated(
-                    padding: EdgeInsetsDirectional.symmetric(vertical: 20),
-                      itemBuilder: (context, index) => Noteitem(),
-                  separatorBuilder: (context, index) => SizedBox(height: 20,),
-                  itemCount: 20,),
-                )),
+              Custombar(
+                title: 'Notes',
+                icon: Icons.search,
+              ),
+              SizedBox(height: 10,),
+              BlocBuilder<LoadNotesCubit, LoadNotesState>(
+                builder: (context, state) {
+                  return Expanded(
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, Editnotescreen.id);
+                          },
+                          child: ListView.separated(
+                            padding: EdgeInsetsDirectional.symmetric(
+                                vertical: 20),
+                            itemBuilder: (context, index) => Noteitem(),
+                            separatorBuilder: (context, index) => SizedBox(height: 20,),
+                            itemCount: notes.length,)
+
+
+                      ));
+                },
+              ),
             ],
+          ),
         ),
-      ),
-        floatingActionButton:FloatingActionButton(onPressed: (){
+        floatingActionButton: FloatingActionButton(onPressed: () {
           showModalBottomSheet(
-            isScrollControlled: true,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-              context: context, builder: (context){
+              isScrollControlled: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              context: context, builder: (context) {
             return Modalbuttomsheet();
           });
-        },child: Icon(Icons.add,color: Colors.black,),)
+        }, child: Icon(Icons.add, color: Colors.black,),)
 
 
-  );
-
+    );
   }
 }
