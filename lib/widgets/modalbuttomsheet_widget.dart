@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:notes_app/cubits/notes_cubit/load_notes_cubit.dart';
 import 'package:quickalert/quickalert.dart';
 import '../cubits/add_note/add_note_cubit.dart';
 import 'custom_button.dart';
@@ -24,15 +25,12 @@ class _ModalbuttomsheetState extends State<Modalbuttomsheet> {
       child: BlocConsumer<AddNoteCubit, AddNoteState>(
         listener: (context, state) {
           if (state is AddNoteSuccess) {
+            BlocProvider.of<LoadNotesCubit>(context).fetch();
             Navigator.pop(context);
           }
-          if (state is AddNoteFailure) {
-            QuickAlert.show(context: context,
-                type: QuickAlertType.error,
-                title: 'Error',
-                text: '${state.errorMessage}',
-                borderRadius: 16
-            );
+          if (state is AddNoteFailure)
+          {
+
           }
         },
         builder: (context, state) {

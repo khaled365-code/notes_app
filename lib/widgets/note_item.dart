@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:notes_app/cubits/notes_cubit/load_notes_cubit.dart';
 import 'package:notes_app/models/note_model.dart';
 import 'package:quickalert/models/quickalert_options.dart';
 import 'package:quickalert/quickalert.dart';
@@ -12,7 +14,7 @@ class Noteitem extends StatelessWidget {
   Widget build(BuildContext context)
   {
      return Container(
-       padding: EdgeInsetsDirectional.only(start: 10,top: 35,bottom: 35,end: 10),
+       padding: EdgeInsetsDirectional.only(start: 10,top: 35,bottom: 25,end: 10),
        decoration: BoxDecoration(
          borderRadius: BorderRadius.circular(16),
          color: Color(note.color),
@@ -49,6 +51,7 @@ class Noteitem extends StatelessWidget {
                          onConfirmBtnTap: ()
                          {
                            note.delete();
+                           BlocProvider.of<LoadNotesCubit>(context).fetch();
                            Navigator.pop(context);
 
                          },
@@ -64,8 +67,8 @@ class Noteitem extends StatelessWidget {
              )
            ),
            Padding(
-             padding: const EdgeInsets.only(right: 60,top: 20),
-             child: Text(note.date,style: TextStyle(fontSize: 15,color: Colors.black.withOpacity(.5)),),
+             padding: const EdgeInsets.only(right: 10,top: 20),
+             child: Text(note.date,style: TextStyle(fontSize: 20,color: Colors.black),),
            ),
           ],
        ),

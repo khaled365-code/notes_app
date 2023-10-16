@@ -5,5 +5,10 @@ abstract class LoadNotesState {}
 
 class LoadNotesInitial extends LoadNotesState {}
 
+class LoadNotesSuccess extends LoadNotesState {}
+
+
+
+
 
 

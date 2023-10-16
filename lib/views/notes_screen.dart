@@ -27,45 +27,86 @@ class _NotesscreenState extends State<Notesscreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Notemodel> notes = BlocProvider.of<LoadNotesCubit>(context).notes ?? [];
-    print(notes.length);
+
     return Scaffold(
 
-        body: Padding(
-          padding: const EdgeInsets.only(top: 80, left: 20, right: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children:
-            [
-              Custombar(
-                title: 'Notes',
-                icon: Icons.search,
-              ),
-              SizedBox(height: 10,),
-              BlocBuilder<LoadNotesCubit, LoadNotesState>(
-                builder: (context, state) {
-                  return Expanded(
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, Editnotescreen.id);
-                          },
-                          child: ListView.separated(
-                            padding: EdgeInsetsDirectional.symmetric(
-                                vertical: 20),
-                            itemBuilder: (context, index) => Noteitem(
-                              note: notes[index],
-                            ),
-                            separatorBuilder: (context, index) => SizedBox(height: 20,),
-                            itemCount: notes.length,)
+        body: BlocBuilder<LoadNotesCubit, LoadNotesState>(
+        builder: (context, state)
+        {
+          if(state is LoadNotesSuccess)
+            {
+              List<Notemodel> notes = BlocProvider.of<LoadNotesCubit>(context).notes ?? [];
+              return Padding(
+                padding: const EdgeInsets.only(top: 80, left: 20, right: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children:
+                  [
+                    Custombar(
+                      title: 'Notes',
+                      icon: Icons.search,
+                    ),
+                    SizedBox(height: 10,),
+                    Expanded(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, Editnotescreen.id);
+                            },
+                            child: ListView.separated(
+                              padding: EdgeInsetsDirectional.symmetric(
+                                  vertical: 20),
+                              itemBuilder: (context, index) => Noteitem(
+                                note: notes[index],
+                              ),
+                              separatorBuilder: (context, index) => SizedBox(height: 20,),
+                              itemCount: notes.length,)
+                        ))
+
+                  ],
+                ),
+              );
+            }
+          else
+            {
+              List<Notemodel> notes = BlocProvider.of<LoadNotesCubit>(context).notes ?? [];
+              return Padding(
+                padding: const EdgeInsets.only(top: 80, left: 20, right: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children:
+                  [
+                    Custombar(
+                      title: 'Notes',
+                      icon: Icons.search,
+                    ),
+                    SizedBox(height: 10,),
+                    Expanded(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, Editnotescreen.id);
+                            },
+                            child: ListView.separated(
+                              padding: EdgeInsetsDirectional.symmetric(
+                                  vertical: 20),
+                              itemBuilder: (context, index) => Noteitem(
+                                note: notes[index],
+                              ),
+                              separatorBuilder: (context, index) => SizedBox(height: 20,),
+                              itemCount: notes.length,)
+                        ))
+
+                  ],
+                ),
+              );
+            }
 
 
-                      ));
-                },
-              ),
-            ],
-          ),
+
+        }
         ),
-        floatingActionButton: FloatingActionButton(onPressed: () {
+
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
           showModalBottomSheet(
               isScrollControlled: true,
               shape: RoundedRectangleBorder(

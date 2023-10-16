@@ -74,8 +74,7 @@ class _FormwidgetState extends State<Formwidget> {
                             subTitle: subTitle!,
                             date: formatedDate,
                             color: Colors.greenAccent.value);
-                        BlocProvider.of<AddNoteCubit>(context).addNote(
-                            notemodel);
+                        BlocProvider.of<AddNoteCubit>(context).addNote(notemodel);
                       }
                       else {
                         autovalidateMode = AutovalidateMode.always;
