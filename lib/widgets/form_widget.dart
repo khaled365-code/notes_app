@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/cubits/add_note/add_note_cubit.dart';
 import 'package:notes_app/models/note_model.dart';
 
+import 'colors_listview.dart';
 import 'custom_button.dart';
 import 'custom_textfield.dart';
 
@@ -28,7 +29,7 @@ class _FormwidgetState extends State<Formwidget> {
       key: checkDataKey,
       autovalidateMode: autovalidateMode,
       child: Padding(
-        padding:  EdgeInsets.only(top: 25, left: 20, right: 20,bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:  EdgeInsets.only(top: 40, left: 20, right: 20,bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -45,7 +46,7 @@ class _FormwidgetState extends State<Formwidget> {
                 },
 
               ),
-              SizedBox(height: 30,),
+              SizedBox(height: 15,),
               Customtextfield(hintText: 'content', maxlines: 5,
                 onsaved: (value) {
                   subTitle = value;
@@ -58,7 +59,9 @@ class _FormwidgetState extends State<Formwidget> {
                   }
                 },
               ),
-              SizedBox(height: 30,),
+              SizedBox(height: 10,),
+              ColorsListView(),
+              SizedBox(height: 10,),
               BlocBuilder<AddNoteCubit, AddNoteState>(
                 builder: (context, state) {
                   var formatedDate=DateFormatter.formatDateTime(

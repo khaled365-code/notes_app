@@ -48,19 +48,15 @@ class _NotesscreenState extends State<Notesscreen> {
                     ),
                     SizedBox(height: 10,),
                     Expanded(
-                        child: InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, Editnotescreen.id);
-                            },
-                            child: ListView.separated(
+                      child: ListView.separated(
                               padding: EdgeInsetsDirectional.symmetric(
                                   vertical: 20),
                               itemBuilder: (context, index) => Noteitem(
                                 note: notes[index],
                               ),
                               separatorBuilder: (context, index) => SizedBox(height: 20,),
-                              itemCount: notes.length,)
-                        ))
+                              itemCount: notes.length,) )
+
 
                   ],
                 ),

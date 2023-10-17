@@ -8,6 +8,7 @@ import 'package:notes_app/simple_blocobserver.dart';
 import 'package:notes_app/views/editnote_screen.dart';
 import 'package:notes_app/views/notes_screen.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:notes_app/views/splash_screen.dart';
 
 void main() async {
 
@@ -29,12 +30,7 @@ class Notesapp extends StatelessWidget {
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          routes:
-          {
-            Notesscreen.id:(context) => Notesscreen(),
-            Editnotescreen.id:(context) => Editnotescreen()
-          },
-          initialRoute: Notesscreen.id ,
+          home: Splashscreen() ,
           theme: ThemeData(
             brightness: Brightness.dark,
             fontFamily: 'Poppins'
